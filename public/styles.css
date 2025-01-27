@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.split-screen {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#video-player,
+#map {
+  width: 50%;
+  height: 70vh;
+  border: 1px solid #ddd;
+}
+
+input {
+  width: 400px;
+  padding: 8px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  background: #0070f3;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0051a2;
+}
