@@ -1,7 +1,0 @@
-{
-  "name": "atlas-chugged",
-  "version": "1.0.0",
-  "dependencies": {
-    "youtube-transcript": "^1.0.6"
-  }
-}
