@@ -28,10 +28,11 @@
     }
 
     async function loadVideo() {
-      // Basic extraction of the videoId from the YouTube URL
-      const videoId = document.getElementById('youtubeUrl').value.split('v=')[1];
+      // Extract videoId from the YouTube URL
+      const url = document.getElementById('youtubeUrl').value;
+      const videoId = url.includes('v=') ? url.split('v=')[1] : url.split('/').pop();
 
-      // Fetch the transcript from our serverless function
+      // Fetch the transcript from the backend API
       const response = await fetch(`/api/transcript?videoId=${videoId}`);
       transcript = await response.json();
 
@@ -58,26 +59,45 @@
     function trackTime() {
       setInterval(() => {
         const time = player.getCurrentTime();
-        // Simple logic to check if we’re within a 5-second window of a mention
+        // Find the transcript entry for the current time
         const entry = transcript.find(e => e.time <= time && e.time + 5 >= time);
         if (entry) moveMap(entry.place);
       }, 1000);
     }
 
     function moveMap(place) {
-      new google.maps.Geocoder().geocode({ address: place }, (results, status) => {
-        if (status === 'OK') {
-          map.setCenter(results[0].geometry.location);
-          map.setZoom(5);
-        }
-      });
+      // Fetch geocoding data from the backend
+      fetch(`/api/get-api-key?address=${encodeURIComponent(place)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "OK" && data.results.length > 0) {
+            const location = data.results[0].geometry.location;
+            map.setCenter(location);
+            map.setZoom(5);
+          } else {
+            console.error("Geocoding failed:", data);
+          }
+        })
+        .catch(error => console.error("Error in moveMap:", error));
     }
-  </script>
 
-  <!-- Google Maps API (replace YOUR_GOOGLE_MAPS_API_KEY) -->
-  <script async
-    defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap">
+    // Load Google Maps dynamically
+    async function loadGoogleMaps() {
+      try {
+        const response = await fetch('/api/get-api-key');
+        const { key } = await response.json();
+        if (!key) throw new Error("Missing API key.");
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+      } catch (error) {
+        console.error("Failed to load Google Maps API:", error);
+      }
+    }
+
+    loadGoogleMaps();
   </script>
 </body>
 </html>
