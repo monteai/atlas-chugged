@@ -34,7 +34,7 @@ h2 {
   opacity: 0.8;
 }
 
-/* Container */
+/* Main Container */
 .container {
   display: flex;
   flex-direction: column;
@@ -43,19 +43,20 @@ h2 {
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
+  width: 95%;
+  max-width: 900px;
   margin: 20px auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Input & Button */
 input {
-  width: 80%;
-  max-width: 400px;
-  padding: 10px;
+  width: 85%;
+  max-width: 500px;
+  padding: 12px;
   border: none;
   border-radius: 6px;
+  font-size: 16px;
 }
 
 .primary-btn {
@@ -73,12 +74,13 @@ input {
   background: #ffdb4d;
 }
 
-/* Video & Map */
+/* Video & Map Layout */
 .split-screen {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
   margin-top: 20px;
 }
 
@@ -93,8 +95,9 @@ input {
 /* Desktop Layout */
 @media (min-width: 768px) {
   .split-screen {
-    flex-wrap: nowrap;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: stretch;
   }
 
   #video-player,
