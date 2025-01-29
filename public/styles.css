@@ -1,112 +1,120 @@
-/* General Styles */
-body {
+/* General Reset */
+* {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Background Gradient (Inspired by Stripe) */
+body {
+  background: linear-gradient(135deg, #6E56CF, #4F46E5, #EC4899);
   color: white;
   text-align: center;
-}
-
-/* Header */
-header {
-  padding: 40px 20px;
-}
-
-h1 {
-  font-size: 32px;
-  font-weight: bold;
-}
-
-h2 {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.highlight {
-  background: linear-gradient(90deg, #ff4d4d, #ffcc00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.subheader {
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-/* Container */
-.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.1);
+  justify-content: center;
   padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
-  margin: 20px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+.header {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Serif Font for "Atlas Chugged" */
+.brand-title {
+  font-family: 'Georgia', serif;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+/* Gradient Highlight */
+.gradient-text {
+  background: linear-gradient(45deg, #ff8a00, #ff0080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.subheader {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-bottom: 15px;
+}
+
+/* Main Container */
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 85%;
+  max-width: 800px;
 }
 
 /* Input & Button */
-input {
-  width: 80%;
-  max-width: 400px;
+input[type="text"] {
+  width: 90%;
   padding: 10px;
+  font-size: 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  outline: none;
 }
 
 .primary-btn {
-  padding: 12px 24px;
-  background: #ffcc00;
-  color: black;
-  font-weight: bold;
+  background: #ff8a00;
+  color: white;
+  padding: 10px 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .primary-btn:hover {
-  background: #ffdb4d;
+  background: #ff0080;
 }
 
-/* Video & Map */
+/* Split Screen Layout */
 .split-screen {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 15px;
+  margin-top: 15px;
 }
 
-#video-player,
-#map {
-  width: 100%;
-  max-width: 600px;
-  height: 50vh;
+#video-player, #map {
+  flex: 1;
+  min-height: 320px;
   border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border: none;
 }
 
-/* Desktop Layout */
-@media (min-width: 768px) {
+/* Responsive for Mobile */
+@media (max-width: 768px) {
   .split-screen {
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
   }
-
-  #video-player,
-  #map {
-    width: 48%;
-    height: 70vh;
+  .header h1 {
+    font-size: 2rem;
   }
-}
-
-/* Footer */
-footer {
-  margin-top: 30px;
-  font-size: 14px;
-  opacity: 0.8;
+  .brand-title {
+    font-size: 2.5rem;
+  }
 }
