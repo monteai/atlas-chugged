@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atlas Chugged</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Header with headline & subheader -->
+  <div class="header">
+    <h1>Watch <span class="gradient-text">geopolitical videos</span> with a live-moving map.</h1>
+    <p class="subheader">This MVP works for this one video for now.</p>
+  </div>
+
   <div class="container">
     <input type="text" id="youtubeUrl" value="https://www.youtube.com/watch?v=OagYlYna75Y">
-    <button onclick="loadVideo()">Load</button>
+    <button class="primary-btn" onclick="loadVideo()">Load</button>
+
     <div class="split-screen">
       <div id="video-player"></div>
       <div id="map"></div>
     </div>
   </div>
 
+  <!-- Footer -->
+  <footer>
+    <p>YouTube does not like sharing its captions. <a href="#">Have ideas?</a></p>
+  </footer>
+
   <!-- YouTube Iframe API -->
   <script src="https://www.youtube.com/iframe_api"></script>
-  <!-- Load locations.js -->
   <script src="locations.js"></script>
 
   <script>
     let player, map;
-    let transcript = []; // Placeholder for when transcript logic is re-enabled
+    let transcript = [];
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -33,12 +46,6 @@
     async function loadVideo() {
       const url = document.getElementById('youtubeUrl').value;
       const videoId = url.includes('v=') ? url.split('v=')[1] : url.split('/').pop();
-
-      // Uncomment this when transcript fetching is ready
-      /*
-      const response = await fetch(`/api/transcript?videoId=${videoId}`);
-      transcript = await response.json();
-      */
 
       if (!player) {
         player = new YT.Player('video-player', {
@@ -65,12 +72,6 @@
         const time = Math.floor(player.getCurrentTime());
         const location = window.locations.find(loc => loc.time === time);
         if (location) moveMap(location.lat, location.lng, location.place);
-
-        // Uncomment this when transcript fetching is re-enabled
-        /*
-        const entry = transcript.find(e => e.time <= time && e.time + 5 >= time);
-        if (entry) moveMap(entry.place);
-        */
       }, 1000);
     }
 
