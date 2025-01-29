@@ -7,15 +7,17 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header with headline & subheader -->
-  <div class="header">
-    <h1>Watch <span class="gradient-text">geopolitical videos</span> with a live-moving map.</h1>
-    <p class="subheader">This MVP works for this one video for now.</p>
-  </div>
+  <!-- Header -->
+  <header>
+    <h1>Atlas Chugged</h1>
+    <h2>Watch videos with a <span class="highlight">live-moving map</span></h2>
+    <p class="subheader">This MVP works for this one video for now</p>
+  </header>
 
+  <!-- Main content -->
   <div class="container">
     <input type="text" id="youtubeUrl" value="https://www.youtube.com/watch?v=OagYlYna75Y">
-    <button class="primary-btn" onclick="loadVideo()">Load</button>
+    <button class="primary-btn" onclick="loadVideo()">Watch</button>
 
     <div class="split-screen">
       <div id="video-player"></div>
@@ -25,7 +27,7 @@
 
   <!-- Footer -->
   <footer>
-    <p>YouTube does not like sharing its captions. <a href="#">Have ideas?</a></p>
+    <p>YouTube does not like sharing its captions</p>
   </footer>
 
   <!-- YouTube Iframe API -->
