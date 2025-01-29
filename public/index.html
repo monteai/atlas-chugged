@@ -16,9 +16,12 @@
 
   <!-- YouTube Iframe API -->
   <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- Load locations.js -->
+  <script src="locations.js"></script>
+
   <script>
     let player, map;
-    let transcript = [];
+    let transcript = []; // Placeholder for when transcript logic is re-enabled
 
     function initMap() {
       map = new google.maps.Map(document.getElementById('map'), {
@@ -28,15 +31,15 @@
     }
 
     async function loadVideo() {
-      // Extract videoId from the YouTube URL
       const url = document.getElementById('youtubeUrl').value;
       const videoId = url.includes('v=') ? url.split('v=')[1] : url.split('/').pop();
 
-      // Fetch the transcript from the backend API
+      // Uncomment this when transcript fetching is ready
+      /*
       const response = await fetch(`/api/transcript?videoId=${videoId}`);
       transcript = await response.json();
+      */
 
-      // Initialize YouTube player if not already created
       if (!player) {
         player = new YT.Player('video-player', {
           height: '360',
@@ -58,30 +61,25 @@
 
     function trackTime() {
       setInterval(() => {
-        const time = player.getCurrentTime();
-        // Find the transcript entry for the current time
+        if (!player || !window.locations) return;
+        const time = Math.floor(player.getCurrentTime());
+        const location = window.locations.find(loc => loc.time === time);
+        if (location) moveMap(location.lat, location.lng, location.place);
+
+        // Uncomment this when transcript fetching is re-enabled
+        /*
         const entry = transcript.find(e => e.time <= time && e.time + 5 >= time);
         if (entry) moveMap(entry.place);
+        */
       }, 1000);
     }
 
-    function moveMap(place) {
-      // Fetch geocoding data from the backend
-      fetch(`/api/get-api-key?address=${encodeURIComponent(place)}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.status === "OK" && data.results.length > 0) {
-            const location = data.results[0].geometry.location;
-            map.setCenter(location);
-            map.setZoom(5);
-          } else {
-            console.error("Geocoding failed:", data);
-          }
-        })
-        .catch(error => console.error("Error in moveMap:", error));
+    function moveMap(lat, lng, place) {
+      map.setCenter({ lat, lng });
+      map.setZoom(5);
+      console.log(`Moved map to ${place}`);
     }
 
-    // Load Google Maps dynamically
     async function loadGoogleMaps() {
       try {
         const response = await fetch('/api/get-api-key');
